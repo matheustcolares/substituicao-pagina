@@ -1,11 +1,9 @@
 package main;
 
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.Random;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 
 import org.primefaces.model.chart.Axis;
 import org.primefaces.model.chart.AxisType;
@@ -21,18 +19,19 @@ import algoritimos.NFU;
 @SessionScoped
 public class Main {
 	private BarChartModel model;
+	private int numberPages;
+	private int numberFrame;
+	
 	public void run() {
 			setModel(new BarChartModel());
-		 //Scanner scanner = new Scanner(System.in);
+	
+	        int[] pages = criarArrayAleatorio(this.numberPages);
+	        
+	       for(int i =0;i<pages.length;i++) {
+	    	   System.out.println(pages[i]);
+	       }
 
-	        //System.out.print("Digite a sequência de páginas (separada por espaços): ");
-	        //String[] input = scanner.nextLine().split(" ");
-	        //int[] pages = Arrays.stream(input).mapToInt(Integer::parseInt).toArray();
-	        int[] pages = {1,5,7,9,4,3,6,17,18,14,32};
-
-	        System.out.print("Digite o número de quadros de página: ");
-	        //int frameSize = scanner.nextInt();
-	        int frameSize = 5;
+	        int frameSize = this.numberFrame;
 	        
 	        Fifo fifo = new Fifo();
 	        LRU lru = new LRU();
@@ -61,17 +60,40 @@ public class Main {
 	        Axis yAxis = model.getAxis(AxisType.Y);
 	        yAxis.setLabel("Quantidade de PaginasFaults");
 	        yAxis.setMin(0);
-	        yAxis.setMax(100);
+	        yAxis.setMax(this.numberPages);
 	        System.out.println("Método 1 (FIFO) - " + fifoFaults + " faltas de página");
 	        System.out.println("Método 2 (LRU) - " + lruFaults + " faltas de página");
 	        System.out.println("Método 3 (Clock) - " + clockFaults + " faltas de página");
 	        System.out.println("Método 4 (NFU) - " + nfuFaults + " faltas de página");
 	    }
+	public static int[] criarArrayAleatorio(int tamanho) {
+        Random random = new Random();
+        int[] array = new int[tamanho];
+
+        // Preenche o array com valores aleatórios entre 0 e 9
+        for (int i = 0; i < tamanho; i++) {
+            array[i] = random.nextInt(10); // Gera números entre 0 e 9
+        }
+
+        return array;
+    }
 	public BarChartModel getModel() {
 		return model;
 	}
 	public void setModel(BarChartModel model) {
 		this.model = model;
+	}
+	public int getNumberPages() {
+		return numberPages;
+	}
+	public void setNumberPages(int numberPages) {
+		this.numberPages = numberPages;
+	}
+	public int getNumberFrame() {
+		return numberFrame;
+	}
+	public void setNumberFrame(int numberFrame) {
+		this.numberFrame = numberFrame;
 	}
 
 	}

@@ -11,8 +11,20 @@
 </h:head>
 
  	<h:body>
- 		<f:event type="preRenderView" listener="#{mainBean.run}" />
- 		<p:chart type="bar" model ="#{mainBean.model}"/>
+ 	<h:panelGroup style="display: flex; justify-content: center;">
+        <h:form style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+        	<h:outputLabel for="numberPages" value="Número de Páginas:" />
+            <p:inputNumber value="#{mainBean.numberPages}" style="width: 100%;" />
+            <h:outputLabel for="numberPages" value="Tamanho da Memoria:" />
+            <p:inputNumber value="#{mainBean.numberFrame}" style="width: 100%;" />
+            <p:commandButton actionListener="#{mainBean.run}" value="Testar" update="grafico" />
+        </h:form>
+    </h:panelGroup>
+
+    <h:panelGroup style="display: flex; justify-content: center; margin-top: 20px;">
+        <f:event type="preRenderView" listener="#{mainBean.run}" />
+        <p:chart id="grafico" type="bar" model="#{mainBean.model}" style="width: 80%;" />
+    </h:panelGroup>
     </h:body>
 
 </html>
